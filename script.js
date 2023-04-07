@@ -1,21 +1,25 @@
 //your code here
-function updateClock() {
-  const now = new Date();
-  const hourHand = document.querySelector("#hour-hand");
-  const minuteHand = document.querySelector("#minute-hand");
-  const secondHand = document.querySelector("#second-hand");
-  
-  const seconds = now.getSeconds();
-  const minutes = now.getMinutes();
-  const hours = now.getHours() % 12;
-  
-  const secondDegrees = (seconds / 60) * 360;
-  const minuteDegrees = ((minutes + (seconds / 60)) / 60) * 360;
-  const hourDegrees = ((hours + (minutes / 60) + (seconds / 3600)) / 12) * 360;
-  
-  secondHand.style.transform = `rotate(${secondDegrees}deg)`;
-  minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
-  hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+function showTime() {
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let period = "AM";
+
+    if (hours === 0) {
+        hours = 12;
+    } else if (hours > 12) {
+        hours -= 12;
+        period = "PM";
+    }
+
+    hours = hours < 10 ? `0${hours}` : hours;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    let time = `${hours}:${minutes}:${seconds} ${period}`;
+    document.getElementById("clock").innerText = time;
 }
 
-setInterval(updateClock, 1000);
+showTime();
+setInterval(showTime, 1000);
